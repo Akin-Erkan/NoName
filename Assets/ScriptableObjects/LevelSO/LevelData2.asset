@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b76d626bf8ebfc44add0cdfd547c253, type: 3}
+  m_Name: LevelData2
+  m_EditorClassIdentifier: 
+  id: 2
+  displayName: Level2
+  defenderData:
+  - {fileID: 11400000, guid: 31e9ba18620ab6548910da62391e7f0f, type: 2}
+  - {fileID: 11400000, guid: 31e9ba18620ab6548910da62391e7f0f, type: 2}
+  - {fileID: 11400000, guid: 31e9ba18620ab6548910da62391e7f0f, type: 2}
+  - {fileID: 11400000, guid: f4b28a6d4d40c234d85d160b1c040c62, type: 2}
+  - {fileID: 11400000, guid: f4b28a6d4d40c234d85d160b1c040c62, type: 2}
+  - {fileID: 11400000, guid: f4b28a6d4d40c234d85d160b1c040c62, type: 2}
+  - {fileID: 11400000, guid: f4b28a6d4d40c234d85d160b1c040c62, type: 2}
+  - {fileID: 11400000, guid: 28c37b51ea7813c4a9aaf2af01863827, type: 2}
+  - {fileID: 11400000, guid: 28c37b51ea7813c4a9aaf2af01863827, type: 2}
+  enemyData:
+  - {fileID: 11400000, guid: 4eef274194c45824bb3fb376ef48cf8f, type: 2}
+  - {fileID: 11400000, guid: 4eef274194c45824bb3fb376ef48cf8f, type: 2}
+  - {fileID: 11400000, guid: 4eef274194c45824bb3fb376ef48cf8f, type: 2}
+  - {fileID: 11400000, guid: 4eef274194c45824bb3fb376ef48cf8f, type: 2}
+  - {fileID: 11400000, guid: 4eef274194c45824bb3fb376ef48cf8f, type: 2}
+  - {fileID: 11400000, guid: 8d1dc364ffc09414090850cfc7aeff30, type: 2}
+  - {fileID: 11400000, guid: 8d1dc364ffc09414090850cfc7aeff30, type: 2}
+  - {fileID: 11400000, guid: 0e9f519079196d640b54c23a3e591689, type: 2}
+  - {fileID: 11400000, guid: 0e9f519079196d640b54c23a3e591689, type: 2}
+  - {fileID: 11400000, guid: 0e9f519079196d640b54c23a3e591689, type: 2}
+  enemySpawnRateInSeconds: 2
+  baseHealth: 5

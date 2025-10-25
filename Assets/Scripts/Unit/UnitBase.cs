@@ -6,7 +6,6 @@ namespace UnicoStudio.Unit
 {
     public abstract class UnitBase : MonoBehaviour
     {
-        public int CurrentHP { get; protected set; }
         
         [SerializeField]
         private UnitDataSO unitDataSo;
@@ -14,11 +13,39 @@ namespace UnicoStudio.Unit
         {
             get => unitDataSo;
         }
-
-        protected GridCell _currentGridCell;
-
         
+        protected GridCell _currentGridCell;
+        
+        private SpriteRenderer _spriteRenderer;
+        
+        public SpriteRenderer SpriteRenderer
+        {
+            get => _spriteRenderer;
+            set => _spriteRenderer = value;
+        }
 
+        protected GridCell CurrentGridCell
+        {
+            get => _currentGridCell;
+            set => _currentGridCell = value;
+        }
+
+
+        protected virtual void Start()
+        {
+            SpriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        public void Init()
+        {
+            if(SpriteRenderer == null)
+                SpriteRenderer = GetComponent<SpriteRenderer>();
+            SpriteRenderer.sprite = unitDataSo.Icon;
+        }
+        
+        
+        
+        
     }
     
     
