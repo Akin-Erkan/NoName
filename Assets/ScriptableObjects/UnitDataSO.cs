@@ -2,12 +2,21 @@ using UnityEngine;
 
 namespace UnicoStudio.ScriptableObjects
 {
-    public abstract class UnitData : ScriptableObject
+    public abstract class UnitDataSO : ScriptableObject
     {
         [Header("General Info")]
-        public string id;
-        public string displayName;
-        public Sprite icon;
+        [SerializeField]
+        private string id;
+        [SerializeField]
+        private string displayName;
+        [SerializeField]
+        private Sprite icon;
+
+        public Sprite Icon => icon;
+
+        public string DisplayName => displayName;
+
+        public string ID => id;
     }
     
 }

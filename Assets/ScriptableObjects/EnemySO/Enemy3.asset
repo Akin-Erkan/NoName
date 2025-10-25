@@ -17,5 +17,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b48543a8ea7e94140baa9c27546edc69, type: 3}
   health: 5
   speed: 0.5
-  scoreValue: 0
-  goldReward: 0
+  scoreValue: 2
