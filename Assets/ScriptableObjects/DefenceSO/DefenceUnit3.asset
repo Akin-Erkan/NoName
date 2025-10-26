@@ -19,4 +19,4 @@ MonoBehaviour:
   damage: 10
   range: 1
   attackInterval: 5
-  direction: 4
+  direction: 1

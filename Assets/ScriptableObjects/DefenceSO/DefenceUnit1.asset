@@ -17,6 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4948be07ec938f04693baa5bcf595182, type: 3}
   unitPrefab: {fileID: 7618465018933515692, guid: 2065a43b217b9b74a93f5f7c2bc99b34, type: 3}
   damage: 3
-  range: 2
+  range: 4
   attackInterval: 3
   direction: 0
