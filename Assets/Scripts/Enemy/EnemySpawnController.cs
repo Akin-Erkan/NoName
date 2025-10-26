@@ -48,15 +48,21 @@ namespace UnicoStudio.Enemy
         private void OnEnemyReachedToBase(EnemyReachedToDefenderBaseMessage enemyReachedToDefenderBaseMessage)
         {
             _currentLevelReachedEnemy++;
+            HandleEnemyDieOrDefenderBaseReach(enemyReachedToDefenderBaseMessage.ReachedEnemy,enemyReachedToDefenderBaseMessage.DestroyAfterSeconds);
         }
 
         private void OnEnemyDied(EnemyDiedMessage enemyDiedMessage)
         {
-            if (CurrentEnemies.Contains(enemyDiedMessage.Diedenemy))
+            _currentLevelDiedEnemy++;
+            HandleEnemyDieOrDefenderBaseReach(enemyDiedMessage.Diedenemy,0);
+        }
+
+        private void HandleEnemyDieOrDefenderBaseReach(Unit.Enemy enemy, float destroyAfterSeconds)
+        {
+            if (CurrentEnemies.Contains(enemy))
             {
-                CurrentEnemies.Remove(enemyDiedMessage.Diedenemy);
-                Destroy(enemyDiedMessage.Diedenemy.gameObject);
-                _currentLevelDiedEnemy++;
+                CurrentEnemies.Remove(enemy);
+                Destroy(enemy.gameObject, destroyAfterSeconds);
                 if ((_currentLevelDiedEnemy + _currentLevelReachedEnemy) == _currentLevelEnemyCount)
                 {
                     _currentLevelDiedEnemy = 0;

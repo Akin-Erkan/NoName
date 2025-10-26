@@ -30,7 +30,7 @@ namespace UnicoStudio.Core
             var gridCell = CheckGridCellSelection();
             if (gridCell == null) 
                 return;
-            MessageBroker.Default.Publish(new UnitSpawnMessage(unitDragMessage.DraggedUnitInfo,gridCell));
+            MessageBroker.Default.Publish(new UnitSpawnRequestMessage(unitDragMessage.DraggedUnitInfo,gridCell));
             
         }
 

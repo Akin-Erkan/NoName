@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 1087426898}
   - component: {fileID: 1087426899}
   m_Layer: 0
-  m_Name: UnitSpawnUIController
+  m_Name: UnitUIController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -38,13 +38,23 @@ namespace UnicoStudio
             DraggedUnitInfo = draggedUnitInfo;
         }
     }
+
+    public class UnitSpawnedMessage
+    {
+        public UnitBase UnitInfo { get; private set; }
+
+        public UnitSpawnedMessage(UnitBase unitInfo)
+        {
+            UnitInfo = unitInfo;
+        }
+    }
     
-    public class UnitSpawnMessage
+    public class UnitSpawnRequestMessage
     {
         public UnitBase UnitInfo { get; private set; }
         public GridCell GridCell { get; private set; }
 
-        public UnitSpawnMessage(UnitBase unitInfo, GridCell gridCell)
+        public UnitSpawnRequestMessage(UnitBase unitInfo, GridCell gridCell)
         {
             UnitInfo = unitInfo;
             GridCell = gridCell;
@@ -74,10 +84,12 @@ namespace UnicoStudio
     public class EnemyReachedToDefenderBaseMessage
     {
         public Unit.Enemy ReachedEnemy {get; private set;}
+        public float DestroyAfterSeconds {get; private set;}
 
-        public EnemyReachedToDefenderBaseMessage(Unit.Enemy enemy)
+        public EnemyReachedToDefenderBaseMessage(Unit.Enemy enemy, float destroyAfterSeconds)
         {
             ReachedEnemy = enemy;
+            DestroyAfterSeconds = destroyAfterSeconds;
         }
         
     }

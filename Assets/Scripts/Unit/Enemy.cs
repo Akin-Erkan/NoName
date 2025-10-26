@@ -62,7 +62,18 @@ namespace UnicoStudio.Unit
             CurrentGridCell = nextCell;
             if (CurrentGridCell.GridPosition.y == _gridManager.GetRowSize() -1 )
             {
-                EnemyReachedToDefenderBase();
+                EnemyReachedToDefenderBase(moveDuration);
+                var lastMovementDistance = endPos - startPos;
+                var lastMovePosition = transform.position + lastMovementDistance;
+                startPos = transform.position;
+                elapsed = 0;
+                while (elapsed < moveDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / moveDuration);
+                    transform.position = Vector3.Lerp(startPos, lastMovePosition, t);
+                    yield return null;
+                }
                 yield break;
             }
             
@@ -86,10 +97,10 @@ namespace UnicoStudio.Unit
             
         }
 
-        public void EnemyReachedToDefenderBase()
+        public void EnemyReachedToDefenderBase(float destroyAfterSeconds)
         {
             _canTakeDamage = false;
-            MessageBroker.Default.Publish(new EnemyReachedToDefenderBaseMessage(this));
+            MessageBroker.Default.Publish(new EnemyReachedToDefenderBaseMessage(this,destroyAfterSeconds));
             print("EnemyReachedToDefenderBaseMessage");
         }
         
