@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnicoStudio.ScriptableObjects;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace UnicoStudio.Unit
 {
@@ -10,7 +12,24 @@ namespace UnicoStudio.Unit
         [SerializeField]
         private Transform unitSpawnParent;
         
+        private List<Defender> _currentDefenders = new List<Defender>();
+
+        public List<Defender> CurrentDefenders
+        {
+            get { return _currentDefenders; }
+            private set { _currentDefenders = value; }
+        } 
+        
+        
         private LevelDataSO _currentLevelData;
+        private DiContainer _container;
+
+
+        [Inject]
+        private void Construct(DiContainer diContainer)
+        {
+            _container = diContainer;
+        }
         
 
         private void Start()
@@ -22,6 +41,13 @@ namespace UnicoStudio.Unit
         private void OnNewLevelMessage(NewLevelMessage msg)
         {
             _currentLevelData = Instantiate(msg.LevelData);
+    
+            foreach (var defender in CurrentDefenders)
+            {
+                Destroy(defender.gameObject);
+            }
+    
+            CurrentDefenders.Clear();
         }
 
         private void OnUnitSpawnMessage(UnitSpawnMessage msg)
@@ -45,9 +71,12 @@ namespace UnicoStudio.Unit
                         return;
                     }
                     var gridCell = msg.GridCell;
-                    gridCell.IsOccupied = true;
-                    var defenderInstance = Instantiate(defender,gridCell.transform.position,gridCell.transform.rotation,unitSpawnParent);
+                    
+                    var defenderInstance = _container.InstantiatePrefabForComponent<Unit.Defender>(defender,gridCell.transform.position,gridCell.transform.rotation,unitSpawnParent);
                     defenderInstance.Init(gridCell);
+                    CurrentDefenders.Add(defenderInstance);
+                    gridCell.IsOccupied = true;
+                    gridCell.UnitBase = defenderInstance;
                     _currentLevelData.DefenderData.Remove(defenderData);
                 }
             }

@@ -1,4 +1,5 @@
 using UnicoStudio.ScriptableObjects;
+using UnicoStudio.Unit;
 using UnityEngine;
 
 namespace UnicoStudio.GridSystem
@@ -8,7 +9,7 @@ namespace UnicoStudio.GridSystem
         private Vector2Int _gridPosition;
         private Vector2 _worldPosition;
         private bool _isOccupied;
-        private UnitDataSO  _unitData;
+        private UnitBase _unitBase;
 
 
         public Vector2Int GridPosition
@@ -29,7 +30,11 @@ namespace UnicoStudio.GridSystem
             get => _isOccupied;
             set => _isOccupied = value;
         }
-        
-        
+
+        public UnitBase UnitBase
+        {
+            get => _unitBase;
+            set => _unitBase = value;
+        }
     }
 }

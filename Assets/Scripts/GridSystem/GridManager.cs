@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 namespace UnicoStudio.GridSystem
@@ -23,6 +24,7 @@ namespace UnicoStudio.GridSystem
         private void Start()
         {
             GenerateGrid();
+            MessageBroker.Default.Receive<NewLevelMessage>().Subscribe(OnNewLevel).AddTo(this);
         }
         
         [ContextMenu("Generate Grid")]
@@ -52,9 +54,10 @@ namespace UnicoStudio.GridSystem
         
         
         public bool IsPlacementAllowed(GridCell gridCell) => gridCell.GridPosition.y >= rowSize / 2;
-
         public GridCell GetCell(int x, int y) => x >= 0 && x < columnSize && y >= 0 && y < rowSize ? _gridArray[x, y] : null;
-
+        public int GetRowSize() => rowSize;
+        public int GetColumnSize() => columnSize;
+        
         public List<GridCell> GetAvailableEnemySpawnCells()
         {
             List<GridCell> availableEnemySpawnCells = new List<GridCell>();
@@ -77,10 +80,20 @@ namespace UnicoStudio.GridSystem
             if (gridCell.GridPosition.y < rowSize -1)
             {
                 var nextGridCell = _gridArray[gridCell.GridPosition.x, gridCell.GridPosition.y +1];
-                if(!nextGridCell.IsOccupied)
-                    nextAvailableGridCell = nextGridCell;
+                nextAvailableGridCell = nextGridCell;
             }
             return nextAvailableGridCell;
+        }
+
+        private void OnNewLevel(NewLevelMessage msg)
+        {
+            for (int x = 0; x < columnSize; x++)
+            {
+                for (int y = 0; y < rowSize; y++)
+                {
+                    _gridArray[x, y].IsOccupied = false;
+                }
+            }
         }
         
         

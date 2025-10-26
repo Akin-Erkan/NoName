@@ -1,5 +1,4 @@
 using UnicoStudio.ScriptableObjects;
-using UnicoStudio.Unit;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -62,7 +61,6 @@ namespace UnicoStudio.UI
 
         public void OnDrag(PointerEventData eventData)
         {
-            print("OnDrag");
             _rectTransform.anchoredPosition +=  eventData.delta /  _canvas.scaleFactor;
         }
     }

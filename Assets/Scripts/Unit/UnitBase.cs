@@ -24,7 +24,7 @@ namespace UnicoStudio.Unit
             set => _spriteRenderer = value;
         }
 
-        protected GridCell CurrentGridCell
+        public GridCell CurrentGridCell
         {
             get => _currentGridCell;
             set => _currentGridCell = value;

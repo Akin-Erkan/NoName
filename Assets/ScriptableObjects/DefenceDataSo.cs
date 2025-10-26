@@ -5,9 +5,6 @@ namespace UnicoStudio.ScriptableObjects
     public enum AttackDirection
     {
         Forward,
-        Backward,
-        Left,
-        Right,
         All
     }
     
@@ -19,7 +16,7 @@ namespace UnicoStudio.ScriptableObjects
         [SerializeField]
         private int damage;
         [SerializeField]
-        private float range;
+        private int range;
         [SerializeField]
         private float attackInterval;
         [SerializeField]
@@ -31,7 +28,7 @@ namespace UnicoStudio.ScriptableObjects
             set => damage = value;
         }
 
-        public float Range
+        public int Range
         {
             get => range;
             set => range = value;
