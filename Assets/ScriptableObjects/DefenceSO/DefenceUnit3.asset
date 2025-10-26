@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   displayName: DefenceItem3
-  icon: {fileID: 21300000, guid: 947202eb5dddf7f4db15184ac0d74cd9, type: 3}
+  icon: {fileID: 21300000, guid: 194c1beedc63e6d4e9e11e93c4fc9e37, type: 3}
   unitPrefab: {fileID: 7618465018933515692, guid: 2f76d5a6c78242041a35c25c79548451, type: 3}
   damage: 10
   range: 1
