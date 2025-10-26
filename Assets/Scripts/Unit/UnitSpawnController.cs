@@ -7,6 +7,8 @@ namespace UnicoStudio.Unit
 {
     public class UnitSpawnController : MonoBehaviour
     {
+        [SerializeField]
+        private Transform unitSpawnParent;
         
         private LevelDataSO _currentLevelData;
         
@@ -44,8 +46,8 @@ namespace UnicoStudio.Unit
                     }
                     var gridCell = msg.GridCell;
                     gridCell.IsOccupied = true;
-                    var defenderInstance = Instantiate(defender,gridCell.transform.position,gridCell.transform.rotation);
-                    defenderInstance.Init();
+                    var defenderInstance = Instantiate(defender,gridCell.transform.position,gridCell.transform.rotation,unitSpawnParent);
+                    defenderInstance.Init(gridCell);
                     _currentLevelData.DefenderData.Remove(defenderData);
                 }
             }

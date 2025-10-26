@@ -1,3 +1,4 @@
+using UnicoStudio.Unit;
 using UnityEngine;
 
 namespace UnicoStudio.ScriptableObjects
@@ -11,12 +12,16 @@ namespace UnicoStudio.ScriptableObjects
         private string displayName;
         [SerializeField]
         private Sprite icon;
+        [SerializeField]
+        private UnitBase unitPrefab;
 
         public Sprite Icon => icon;
 
         public string DisplayName => displayName;
 
         public string ID => id;
+        
+        public UnitBase UnitPrefab => unitPrefab;
     }
     
 }

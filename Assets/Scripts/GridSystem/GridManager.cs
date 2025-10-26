@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace UnicoStudio.GridSystem
 {
@@ -54,6 +54,35 @@ namespace UnicoStudio.GridSystem
         public bool IsPlacementAllowed(GridCell gridCell) => gridCell.GridPosition.y >= rowSize / 2;
 
         public GridCell GetCell(int x, int y) => x >= 0 && x < columnSize && y >= 0 && y < rowSize ? _gridArray[x, y] : null;
+
+        public List<GridCell> GetAvailableEnemySpawnCells()
+        {
+            List<GridCell> availableEnemySpawnCells = new List<GridCell>();
+
+            for (int column = 0; column < columnSize; column++)
+            {
+                for (int row = 0; row < 1; row++)
+                {
+                    var gridCell = _gridArray[column, row];
+                    if(!gridCell.IsOccupied)
+                        availableEnemySpawnCells.Add(_gridArray[column, row]);
+                }
+            }
+            return availableEnemySpawnCells;
+        }
+
+        public GridCell GetNextAvailableGridCellForEnemy(GridCell gridCell)
+        {
+            GridCell nextAvailableGridCell = null;
+            if (gridCell.GridPosition.y < rowSize -1)
+            {
+                var nextGridCell = _gridArray[gridCell.GridPosition.x, gridCell.GridPosition.y +1];
+                if(!nextGridCell.IsOccupied)
+                    nextAvailableGridCell = nextGridCell;
+            }
+            return nextAvailableGridCell;
+        }
+        
         
     }
     

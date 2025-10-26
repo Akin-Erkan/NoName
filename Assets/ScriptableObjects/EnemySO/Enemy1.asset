@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 1
   displayName: Enemy1
   icon: {fileID: 21300000, guid: c7e17baedcdd5c649b16e509e002a185, type: 3}
+  unitPrefab: {fileID: 3289938573732721500, guid: af3c339f81b90264ea8de271863b3af8, type: 3}
   health: 3
   speed: 1
   scoreValue: 1
-  goldReward: 1

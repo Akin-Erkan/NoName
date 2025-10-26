@@ -36,11 +36,12 @@ namespace UnicoStudio.Unit
             SpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        public void Init()
+        public virtual void Init(GridCell gridCell)
         {
             if(SpriteRenderer == null)
                 SpriteRenderer = GetComponent<SpriteRenderer>();
             SpriteRenderer.sprite = unitDataSo.Icon;
+            CurrentGridCell = gridCell;
         }
         
         

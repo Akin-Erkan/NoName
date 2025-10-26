@@ -15,6 +15,7 @@ MonoBehaviour:
   id: 2
   displayName: DefenceItem2
   icon: {fileID: 21300000, guid: 9be8cf52ffae1b549b14e9c1c5a56970, type: 3}
+  unitPrefab: {fileID: 7618465018933515692, guid: 0289b1b5b5b86e44fba2b8ee2ebcc30c, type: 3}
   damage: 5
   range: 2
   attackInterval: 4

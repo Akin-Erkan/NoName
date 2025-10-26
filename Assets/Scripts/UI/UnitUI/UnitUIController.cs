@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnicoStudio.Unit;
+using UnicoStudio.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +11,7 @@ namespace UnicoStudio.UI
         private UnitUIHandler unitHandlerPrefab;
         
         [SerializeField] 
-        private List<Defender> defenders;
+        private List<UnitDataSO> defenderDatas;
         
         private List<UnitUIHandler>  _units;
         
@@ -26,7 +26,7 @@ namespace UnicoStudio.UI
 
         private void CreateViewForDefenderUnits()
         {
-            foreach (var defender in defenders)
+            foreach (var defender in defenderDatas)
             {
                 var unitViewUI = Instantiate(unitHandlerPrefab, defenderHorizontalGroupLayout.transform);
                 unitViewUI.Init(defender);

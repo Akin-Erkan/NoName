@@ -2,18 +2,20 @@ using UnicoStudio.GridSystem;
 using UnityEngine;
 using Zenject;
 
-public class DependencyInjectionHandler : MonoInstaller
+
+namespace UnicoStudio.Core
 {
-    [SerializeField] GridManager gridManager;
-    [SerializeField] Camera currentCamera;
-
-    public override void InstallBindings()
+    public class DependencyInjectionHandler : MonoInstaller
     {
-        Container.Bind<GridManager>().FromInstance(gridManager).AsSingle();
-        Container.Bind<Camera>().FromInstance(currentCamera).AsSingle();
-    }
-    
+        [SerializeField] GridManager gridManager;
+        [SerializeField] Camera currentCamera;
 
+        public override void InstallBindings()
+        {
+            Container.Bind<GridManager>().FromInstance(gridManager).AsSingle().NonLazy();
+            Container.Bind<Camera>().FromInstance(currentCamera).AsSingle().NonLazy();
+        }
+    }
     
     
 }

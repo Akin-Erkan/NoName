@@ -1,3 +1,4 @@
+using UnicoStudio.ScriptableObjects;
 using UnicoStudio.Unit;
 using UniRx;
 using UnityEngine;
@@ -16,17 +17,17 @@ namespace UnicoStudio.UI
         private Vector3 _startPos;
         
         [Header("Data")]
-        private UnitBase _unitBase;
+        private UnitDataSO _unitData;
         
         private void Awake()
         {
             GetRequiredComponents();
         }
         
-        public void Init(UnitBase unitData)
+        public void Init(UnitDataSO unitData)
         {
-            _unitBase = unitData;
-            _unitImage.sprite = unitData.UnitDataSo.Icon;
+            _unitData = unitData;
+            _unitImage.sprite = unitData.Icon;
         }
 
         private void GetRequiredComponents()
@@ -56,7 +57,7 @@ namespace UnicoStudio.UI
             print("OnEndDrag");
             _rectTransform.anchoredPosition = _startPos; 
             _canvasGroup.blocksRaycasts = true;
-            MessageBroker.Default.Publish(new UnitDragMessage(_unitBase));
+            MessageBroker.Default.Publish(new UnitDragMessage(_unitData.UnitPrefab));
         }
 
         public void OnDrag(PointerEventData eventData)
