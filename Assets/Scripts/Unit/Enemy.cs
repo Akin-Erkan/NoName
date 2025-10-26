@@ -13,6 +13,8 @@ namespace UnicoStudio.Unit
         
         private int _currentHealth;
         private bool _canTakeDamage = true;
+        [SerializeField]
+        private Animator animator;
 
         [Inject]
         private void Construct(GridManager gridManager)
@@ -88,11 +90,15 @@ namespace UnicoStudio.Unit
             if (_currentHealth > 0)
             {
                 _currentHealth -= damage;
+                animator.SetTrigger("3_Damaged");
             }
 
             if (_currentHealth <= 0)
             {
-                MessageBroker.Default.Publish(new EnemyDiedMessage(this));
+                animator.SetBool("isDeath", true);
+                animator.SetTrigger("4_Death");
+                MessageBroker.Default.Publish(new EnemyDiedMessage(this,1f));
+                StopAllCoroutines();
             }
             
         }

@@ -65,10 +65,12 @@ namespace UnicoStudio
     public class EnemyDiedMessage
     {
         public Unit.Enemy Diedenemy {get; private set;}
+        public float DestroyAfterSeconds {get; private set;}
 
-        public EnemyDiedMessage(Unit.Enemy diedEnemy)
+        public EnemyDiedMessage(Unit.Enemy diedEnemy, float destroyAfterSeconds)
         {
             Diedenemy = diedEnemy;
+            DestroyAfterSeconds = destroyAfterSeconds;
         }
         
     }
@@ -92,6 +94,14 @@ namespace UnicoStudio
             DestroyAfterSeconds = destroyAfterSeconds;
         }
         
+    }
+    
+    public class GameOverMessage
+    {
+        public GameOverMessage()
+        {
+            
+        }
     }
 
 
