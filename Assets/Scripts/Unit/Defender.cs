@@ -10,6 +10,8 @@ namespace UnicoStudio.Unit
         private UnitTargetingSystem _unitTargetingSystem;
         private DefenceDataSo _defenderData;
         private bool _isAttackOnCooldown;
+        [SerializeField]
+        private Animator animator;
 
         [Inject]
         private void Construct(UnitTargetingSystem unitTargetingSystem)
@@ -43,6 +45,7 @@ namespace UnicoStudio.Unit
         private void AttackToEnemy(Enemy enemy)
         {
             enemy.TakeDamage(_defenderData.Damage);
+            animator.SetTrigger("2_Attack");
             Debug.Log($"Attacked {enemy.UnitDataSo.DisplayName} for {_defenderData.Damage} damage");
         }
 

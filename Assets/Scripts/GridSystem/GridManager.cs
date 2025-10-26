@@ -36,6 +36,8 @@ namespace UnicoStudio.GridSystem
                 for (int row = 0; row < rowSize; row++)
                 {
                     var gridCell = Instantiate(gridCellPrefab, gridCellParent);
+                    if(row < rowSize /2)
+                        gridCell.SetEnemyGridColor();
                     var posX = column * gridCellSize;
                     var posY = row * -gridCellSize;
                     gridCell.transform.position = new Vector2(posX, posY);

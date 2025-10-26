@@ -54,7 +54,7 @@ namespace UnicoStudio.Enemy
         private void OnEnemyDied(EnemyDiedMessage enemyDiedMessage)
         {
             _currentLevelDiedEnemy++;
-            HandleEnemyDieOrDefenderBaseReach(enemyDiedMessage.Diedenemy,0);
+            HandleEnemyDieOrDefenderBaseReach(enemyDiedMessage.Diedenemy,enemyDiedMessage.DestroyAfterSeconds);
         }
 
         private void HandleEnemyDieOrDefenderBaseReach(Unit.Enemy enemy, float destroyAfterSeconds)

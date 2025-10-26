@@ -10,6 +10,8 @@ namespace UnicoStudio.GridSystem
         private Vector2 _worldPosition;
         private bool _isOccupied;
         private UnitBase _unitBase;
+        [SerializeField]
+        private SpriteRenderer _renderer;
 
 
         public Vector2Int GridPosition
@@ -36,5 +38,12 @@ namespace UnicoStudio.GridSystem
             get => _unitBase;
             set => _unitBase = value;
         }
+
+        public void SetEnemyGridColor()
+        {
+            _renderer.color = Color.yellow;
+        }
+        
+        
     }
 }

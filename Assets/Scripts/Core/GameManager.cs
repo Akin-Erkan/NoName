@@ -45,6 +45,11 @@ namespace UnicoStudio
                 MessageBroker.Default.Publish(new NewLevelMessage(_currentLevelData));
                 print("New Level just started!");
             }
+            else
+            {
+                //TODO: Gameover
+                
+            }
         }
         
         
