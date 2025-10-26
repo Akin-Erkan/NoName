@@ -1,6 +1,7 @@
 using System.Collections;
 using UnicoStudio.GridSystem;
 using UnicoStudio.ScriptableObjects;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,9 @@ namespace UnicoStudio.Unit
     public class Enemy : UnitBase
     {
         private GridManager _gridManager;
+        
+        private int _currentHealth;
+        private bool _canTakeDamage = true;
 
         [Inject]
         private void Construct(GridManager gridManager)
@@ -19,6 +23,8 @@ namespace UnicoStudio.Unit
         protected override void Start()
         {
             base.Start();
+            var enemyData = UnitDataSo as EnemyDataSo;
+            _currentHealth = enemyData.Health;
             StartCoroutine(MoveToDefenderBase());
         }
 
@@ -30,15 +36,6 @@ namespace UnicoStudio.Unit
         private IEnumerator MoveToDefenderBase()
         {
             var nextCell = _gridManager.GetNextAvailableGridCellForEnemy(CurrentGridCell);
-            if (nextCell == null)
-            {
-                Debug.LogWarning("No nextCell found!");
-                yield break;
-            }
-
-            nextCell.IsOccupied = true;
-            CurrentGridCell.IsOccupied = false;
-            CurrentGridCell = nextCell;
             
             var enemyData = UnitDataSo as EnemyDataSo;
             var speed = enemyData.Speed;
@@ -58,8 +55,42 @@ namespace UnicoStudio.Unit
             }
             transform.position = endPos;
             
+            nextCell.IsOccupied = true;
+            nextCell.UnitBase = this;
+            CurrentGridCell.IsOccupied = false;
+            CurrentGridCell.UnitBase = null;
+            CurrentGridCell = nextCell;
+            if (CurrentGridCell.GridPosition.y == _gridManager.GetRowSize() -1 )
+            {
+                EnemyReachedToDefenderBase();
+                yield break;
+            }
+            
             StartCoroutine(MoveToDefenderBase());
             
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if(!_canTakeDamage)
+                return;
+            if (_currentHealth > 0)
+            {
+                _currentHealth -= damage;
+            }
+
+            if (_currentHealth <= 0)
+            {
+                MessageBroker.Default.Publish(new EnemyDiedMessage(this));
+            }
+            
+        }
+
+        public void EnemyReachedToDefenderBase()
+        {
+            _canTakeDamage = false;
+            MessageBroker.Default.Publish(new EnemyReachedToDefenderBaseMessage(this));
+            print("EnemyReachedToDefenderBaseMessage");
         }
         
     }
