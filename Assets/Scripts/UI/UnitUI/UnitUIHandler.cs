@@ -1,3 +1,4 @@
+using TMPro;
 using UnicoStudio.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -17,7 +18,35 @@ namespace UnicoStudio.UI
         
         [Header("Data")]
         private UnitDataSO _unitData;
+        public UnitDataSO UnitData
+        {
+            get => _unitData;
+            private set => _unitData = value;
+        }
+
         
+        private int _unitCount;
+        public int UnitCount
+        {
+            get => _unitCount;
+            set
+            {
+                _unitCount = value;
+                SetRemainingUnitText(_unitCount.ToString());
+                if(value > 0)
+                    EnableHandler();
+                else
+                    DisableHandler();
+            }
+        }
+
+
+        [Header("Components")] 
+        [SerializeField]
+        private TextMeshProUGUI remainingUnitText;
+
+
+
         private void Awake()
         {
             GetRequiredComponents();
@@ -25,8 +54,25 @@ namespace UnicoStudio.UI
         
         public void Init(UnitDataSO unitData)
         {
-            _unitData = unitData;
+            UnitData = unitData;
             _unitImage.sprite = unitData.Icon;
+        }
+
+        public void DisableHandler()
+        {
+            _unitImage.raycastTarget = false;
+            _unitImage.color = Color.gray;
+        }
+
+        public void EnableHandler()
+        {
+            _unitImage.raycastTarget = true;
+            _unitImage.color = Color.white;
+        }
+
+        public void SetRemainingUnitText(string text)
+        {
+            remainingUnitText.text = text;
         }
 
         private void GetRequiredComponents()
@@ -56,7 +102,7 @@ namespace UnicoStudio.UI
             print("OnEndDrag");
             _rectTransform.anchoredPosition = _startPos; 
             _canvasGroup.blocksRaycasts = true;
-            MessageBroker.Default.Publish(new UnitDragMessage(_unitData.UnitPrefab));
+            MessageBroker.Default.Publish(new UnitDragMessage(UnitData.UnitPrefab));
         }
 
         public void OnDrag(PointerEventData eventData)

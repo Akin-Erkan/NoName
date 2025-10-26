@@ -35,7 +35,7 @@ namespace UnicoStudio.Unit
         private void Start()
         {
             MessageBroker.Default.Receive<NewLevelMessage>().Subscribe(OnNewLevelMessage).AddTo(this);
-            MessageBroker.Default.Receive<UnitSpawnMessage>().Subscribe(OnUnitSpawnMessage).AddTo(this);
+            MessageBroker.Default.Receive<UnitSpawnRequestMessage>().Subscribe(OnUnitSpawnMessage).AddTo(this);
         }
 
         private void OnNewLevelMessage(NewLevelMessage msg)
@@ -50,7 +50,7 @@ namespace UnicoStudio.Unit
             CurrentDefenders.Clear();
         }
 
-        private void OnUnitSpawnMessage(UnitSpawnMessage msg)
+        private void OnUnitSpawnMessage(UnitSpawnRequestMessage msg)
         {
             if (_currentLevelData == null)
             {
@@ -77,6 +77,7 @@ namespace UnicoStudio.Unit
                     CurrentDefenders.Add(defenderInstance);
                     gridCell.IsOccupied = true;
                     gridCell.UnitBase = defenderInstance;
+                    MessageBroker.Default.Publish(new UnitSpawnedMessage(defenderInstance));
                     _currentLevelData.DefenderData.Remove(defenderData);
                 }
             }
