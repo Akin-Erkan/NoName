@@ -1,31 +1,35 @@
+using UnicoStudio.ScriptableObjects;
 using UnityEngine;
 
 namespace UnicoStudio.GridSystem
 {
     public class GridCell : MonoBehaviour
     {
-        private Vector2 _worldPosition;
-
-        public Vector2 WorldPosition
-        {
-            get => _worldPosition;
-            set => _worldPosition = value;
-        }
-
         private Vector2Int _gridPosition;
+        private Vector2 _worldPosition;
+        private bool _isOccupied;
+        private UnitDataSO  _unitData;
+
 
         public Vector2Int GridPosition
         {
             get => _gridPosition;
             set => _gridPosition = value;
         }
+        
 
-        private bool _isOccupied;
-
+        public Vector2 WorldPosition
+        {
+            get => _worldPosition;
+            set => _worldPosition = value;
+        }
+        
         public bool IsOccupied
         {
             get => _isOccupied;
             set => _isOccupied = value;
         }
+        
+        
     }
 }
