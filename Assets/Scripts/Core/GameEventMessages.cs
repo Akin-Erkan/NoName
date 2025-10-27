@@ -8,10 +8,12 @@ namespace UnicoStudio
 
     public class NewLevelMessage
     {
+        public int CurrentLevel { get; set; }
         public LevelDataSO LevelData{get; private set;}
 
-        public NewLevelMessage(LevelDataSO levelData)
+        public NewLevelMessage(int currentLevel,LevelDataSO levelData)
         {
+            CurrentLevel = currentLevel;
             LevelData = levelData;
         }
         
@@ -75,11 +77,27 @@ namespace UnicoStudio
         
     }
     
+    
+    public struct LevelCompleteInfo
+    {
+        public int Level {get; private set;}
+        public int KilledEnemy {get; private set;}
+        public int MissedEnemy  {get; private set;}
+
+        public LevelCompleteInfo(int level,int killedEnemy,int missedEnemy)
+        {
+            Level = level;
+            KilledEnemy = killedEnemy;
+            MissedEnemy = missedEnemy;
+        }
+    }
+    
     public class LevelCompletedMessage
     {
-        public LevelCompletedMessage()
+        public LevelCompleteInfo LevelCompleteInfo { get; private set; }
+        public LevelCompletedMessage(LevelCompleteInfo levelCompleteInfo)
         {
-            
+            LevelCompleteInfo = levelCompleteInfo;
         }
     }
 
@@ -101,6 +119,24 @@ namespace UnicoStudio
         public GameOverMessage()
         {
             
+        }
+    }
+
+    public class RestartRequestMessage
+    {
+        public RestartRequestMessage()
+        {
+            
+        }
+    }
+
+    public class GameOverScoreMessage
+    {
+        public int Score {get; private set;}
+
+        public GameOverScoreMessage(int score)
+        {
+            Score = score;
         }
     }
 

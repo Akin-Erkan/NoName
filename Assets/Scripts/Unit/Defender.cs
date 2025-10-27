@@ -1,3 +1,4 @@
+using System;
 using UniRx;
 using UnicoStudio.ScriptableObjects;
 using Zenject;
@@ -13,6 +14,10 @@ namespace UnicoStudio.Unit
         [SerializeField]
         private Animator animator;
 
+        private bool _canAttack = true;
+
+        private bool _gameOver;
+
         [Inject]
         private void Construct(UnitTargetingSystem unitTargetingSystem)
         {
@@ -22,6 +27,9 @@ namespace UnicoStudio.Unit
         protected override void Start()
         {
             base.Start();
+
+            MessageBroker.Default.Receive<GameOverMessage>().Subscribe(OnGameOver).AddTo(this);
+            MessageBroker.Default.Receive<LevelCompletedMessage>().Subscribe(OnLevelCompletedMessage).AddTo(this);
             _defenderData = UnitDataSo as DefenceDataSo;
 
             Observable.Interval(System.TimeSpan.FromSeconds(0.1f))
@@ -29,8 +37,22 @@ namespace UnicoStudio.Unit
                 .AddTo(this);
         }
 
+        private void OnGameOver(GameOverMessage gameOverMessage)
+        {
+            _gameOver = true;
+        }
+
+        private void OnLevelCompletedMessage(LevelCompletedMessage levelCompletedMessage)
+        {
+            _canAttack = false;
+        }
+
         private void TryAttack()
         {
+            if(_gameOver)
+                return;
+            if(!_canAttack)
+                return;
             if (_isAttackOnCooldown) 
                 return;
 
@@ -56,6 +78,11 @@ namespace UnicoStudio.Unit
             Observable.Timer(System.TimeSpan.FromSeconds(_defenderData.AttackInterval))
                 .Subscribe(_ => _isAttackOnCooldown = false)
                 .AddTo(this);
+        }
+
+        private void OnDestroy()
+        {
+            CurrentGridCell.IsOccupied = false;
         }
     }
 }

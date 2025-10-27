@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnicoStudio.GridSystem;
 using UnicoStudio.ScriptableObjects;
@@ -15,6 +16,7 @@ namespace UnicoStudio.Unit
         private bool _canTakeDamage = true;
         [SerializeField]
         private Animator animator;
+        private bool _gameOver;
 
         [Inject]
         private void Construct(GridManager gridManager)
@@ -25,6 +27,9 @@ namespace UnicoStudio.Unit
         protected override void Start()
         {
             base.Start();
+            MessageBroker.Default.Receive<LevelCompletedMessage>().Subscribe(OnLevelCompleted).AddTo(this);
+            MessageBroker.Default.Receive<GameOverMessage>().Subscribe(OnGameOver).AddTo(this);
+            
             var enemyData = UnitDataSo as EnemyDataSo;
             _currentHealth = enemyData.Health;
             StartCoroutine(MoveToDefenderBase());
@@ -33,6 +38,17 @@ namespace UnicoStudio.Unit
         public override void Init(GridCell gridCell)
         {
             base.Init(gridCell);
+        }
+
+        private void OnGameOver(GameOverMessage gameOverMessage)
+        {
+            _gameOver = true;
+            StopAllCoroutines();
+        }
+
+        private void OnLevelCompleted(LevelCompletedMessage levelCompletedMessage)
+        {
+            StopAllCoroutines();
         }
 
         private IEnumerator MoveToDefenderBase()
@@ -85,6 +101,8 @@ namespace UnicoStudio.Unit
 
         public void TakeDamage(int damage)
         {
+            if (_gameOver)
+                return;
             if(!_canTakeDamage)
                 return;
             if (_currentHealth > 0)
@@ -95,6 +113,7 @@ namespace UnicoStudio.Unit
 
             if (_currentHealth <= 0)
             {
+                _canTakeDamage = false;
                 animator.SetBool("isDeath", true);
                 animator.SetTrigger("4_Death");
                 MessageBroker.Default.Publish(new EnemyDiedMessage(this,1f));
@@ -109,7 +128,11 @@ namespace UnicoStudio.Unit
             MessageBroker.Default.Publish(new EnemyReachedToDefenderBaseMessage(this,destroyAfterSeconds));
             print("EnemyReachedToDefenderBaseMessage");
         }
-        
+
+        private void OnDestroy()
+        {
+            CurrentGridCell.IsOccupied = false;
+        }
     }
 
 }
