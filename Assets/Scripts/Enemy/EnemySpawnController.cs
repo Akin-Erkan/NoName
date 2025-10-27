@@ -22,6 +22,7 @@ namespace UnicoStudio.Enemy
             private set => _currentEnemies = value;
         }
 
+        private int _currentLevel = 0;
         private int _currentLevelEnemyCount;
         private int _currentLevelDiedEnemy;
         private int _currentLevelReachedEnemy;
@@ -63,17 +64,21 @@ namespace UnicoStudio.Enemy
             {
                 CurrentEnemies.Remove(enemy);
                 Destroy(enemy.gameObject, destroyAfterSeconds);
-                if ((_currentLevelDiedEnemy + _currentLevelReachedEnemy) == _currentLevelEnemyCount)
+                if ((_currentLevelDiedEnemy + _currentLevelReachedEnemy) >= _currentLevelEnemyCount)
                 {
-                    _currentLevelDiedEnemy = 0;
-                    _currentLevelReachedEnemy = 0;
-                    MessageBroker.Default.Publish(new LevelCompletedMessage());
+                    var newLevelCompeteInfo = new LevelCompleteInfo(_currentLevel,
+                        _currentLevelDiedEnemy,
+                        _currentLevelReachedEnemy);
+                    MessageBroker.Default.Publish(new LevelCompletedMessage(newLevelCompeteInfo));
                 }
             }
         }
 
         private void OnNewLevelReceived(NewLevelMessage msg)
         {
+            _currentLevel = msg.CurrentLevel;
+            _currentLevelDiedEnemy = 0;
+            _currentLevelReachedEnemy = 0;
             foreach (var currentEnemy in CurrentEnemies)
             {
                 Destroy(currentEnemy.gameObject);

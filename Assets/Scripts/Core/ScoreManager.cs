@@ -17,12 +17,18 @@ namespace UnicoStudio
         private void Start()
         {
             MessageBroker.Default.Receive<EnemyDiedMessage>().Subscribe(OnEnemyDied).AddTo(this);
+            MessageBroker.Default.Receive<GameOverMessage>().Subscribe(OnGameOver).AddTo(this);
         }
 
         private void OnEnemyDied(EnemyDiedMessage enemyDiedMessage)
         {
             var enemyData = enemyDiedMessage.Diedenemy.UnitDataSo as EnemyDataSo;
             CurrentScore += enemyData.ScoreValue;
+        }
+
+        private void OnGameOver(GameOverMessage gameOverMessage)
+        {
+            MessageBroker.Default.Publish(new GameOverScoreMessage(CurrentScore));
         }
         
         
