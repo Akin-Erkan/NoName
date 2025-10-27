@@ -17,6 +17,11 @@ namespace UnicoStudio.UI
         private Transform gameOverPanel;
         [SerializeField]
         private TextMeshProUGUI gameOverText;
+        [SerializeField]
+        private TextMeshProUGUI highScoreText;
+        
+        [SerializeField]
+        private Transform highScorePanel;
         
         [SerializeField]
         private Button restartButton;
@@ -25,6 +30,7 @@ namespace UnicoStudio.UI
         {
             MessageBroker.Default.Receive<LevelCompletedMessage>().Subscribe(OnLevelComplete).AddTo(this);
             MessageBroker.Default.Receive<GameOverScoreMessage>().Subscribe(OnGameOver).AddTo(this);
+            MessageBroker.Default.Receive<NewHighScoreMessage>().Subscribe(OnNewHighScore).AddTo(this);
             restartButton.onClick.AddListener(OnRestartClicked);
         }
 
@@ -48,6 +54,15 @@ namespace UnicoStudio.UI
         {
             gameOverPanel.gameObject.SetActive(true);
             gameOverText.text = "Game Over! \n Your score is:  " + gameOverScoreMessage.Score;
+            var highScore = PlayerPrefs.GetInt("HighScore", 0);
+            highScoreText.text = $"High Score: {highScore}";
+
+        }
+
+        private void OnNewHighScore(NewHighScoreMessage newHighScoreMessage)
+        {
+            highScorePanel.gameObject.SetActive(true);
+            highScoreText.text = $"High Score: {newHighScoreMessage.NewHighScore}";
         }
 
         private void OnRestartClicked()
