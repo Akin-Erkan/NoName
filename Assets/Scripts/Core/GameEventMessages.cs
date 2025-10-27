@@ -140,5 +140,16 @@ namespace UnicoStudio
         }
     }
 
+    public class NewHighScoreMessage
+    {
+        public int NewHighScore {get; private set;}
+
+        public NewHighScoreMessage(int newHighScore)
+        {
+            NewHighScore = newHighScore;
+        }
+        
+    }
+
 
 }
